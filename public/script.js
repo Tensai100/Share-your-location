@@ -76,7 +76,7 @@ async function refreshData() {
         markers[i].bindPopup(data[ids[i]].name);
     }
 
-    document.getElementById('infos').textContent = '';
+    document.getElementById('infos').textContent = 'Position shared';
 }
 
 
