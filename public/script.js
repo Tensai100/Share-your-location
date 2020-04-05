@@ -31,28 +31,38 @@ const iconYc = L.icon({
 const markerYC = L.marker([32.292995, -9.235207], { icon: iconYc }).addTo(mymap);
 markerYC.bindPopup('YouCode');
 
+
+// CLICK EVENT
+const newIcon = L.icon({
+    iconUrl: './icon268.png',
+    iconSize: [50, 65],
+    iconAnchor: [25, 65],
+    popupAnchor: [0, -60] // point from which the popup should open relative to the iconAnchor
+});
+
 let clickMarker;
 mymap.on('click', e => {
-    const clickLocation = e.latlng;
-    clickMarker = L.marker([clickLocation.lat, clickLocation.lng], { icon: myIcon }).addTo(mymap);
+    const clickLocation = e.latlng;    
+    if (clickMarker) mymap.removeLayer(clickMarker);
+    clickMarker = L.marker([clickLocation.lat, clickLocation.lng], { icon: newIcon }).addTo(mymap);
     LAT = clickLocation.lat;
     LON = clickLocation.lng;
-    getLocation(LAT, LON);
-    // mymap.removeLayer(clickMarker);
+    getLocation(LAT, LON, mymap.getZoom());
 });
 
 
 
 //Get location
 getLocation();
-function getLocation(lat, lon){
+function getLocation(lat, lon, zoom){
     if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition(async position => {
             if (!lat) LAT = position.coords.latitude;
             if (!lon) LON = position.coords.longitude;
+            if (!zoom) zoom = 6;
             document.getElementById('lat').textContent = LAT;
             document.getElementById('lon').textContent = LON;
-            mymap.setView([LAT, LON], 6);
+            mymap.setView([LAT, LON], zoom);
         });
     }
     else {
@@ -76,7 +86,7 @@ async function refreshData() {
         markers[i].bindPopup(data[ids[i]].name);
     }
 
-    document.getElementById('infos').textContent = 'Position shared';
+    document.getElementById('infos').textContent = '';
 }
 
 
