@@ -13,7 +13,7 @@ L.tileLayer(
 ).addTo(mymap);
 
 const myIcon = L.icon({
-    iconUrl: './icon256.png',
+    iconUrl: './img/icon256.png',
     iconSize: [64, 64],
     iconAnchor: [32, 64],
     popupAnchor: [0, -60] // point from which the popup should open relative to the iconAnchor
@@ -31,12 +31,12 @@ const iconYc = L.icon({
 
 //Making init markers
 const markerYC = L.marker([32.292995, -9.235207], { icon: iconYc }).addTo(mymap);
-markerYC.bindPopup('YouCode');
+markerYC.bindPopup('<b>YouCode</b>');
 
 
 // CLICK EVENT
 const newIcon = L.icon({
-    iconUrl: './icon268.png',
+    iconUrl: './img/icon268.png',
     iconSize: [50, 65],
     iconAnchor: [25, 65],
     popupAnchor: [0, -60] // point from which the popup should open relative to the iconAnchor
@@ -86,7 +86,7 @@ async function refreshData() {
 
 
 setInterval(refreshData, 1000);
-setInterval(clearMarkers, 10000);
+setInterval(clearMarkers, 30000);
 
 async function clearMarkers(){
     markerGroup.clearLayers();
