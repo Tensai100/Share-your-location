@@ -31,12 +31,12 @@ const iconYc = L.icon({
 const markerYC = L.marker([32.292995, -9.235207], { icon: iconYc }).addTo(mymap);
 markerYC.bindPopup('YouCode');
 
-let clickMarker;
-mymap.on('click', e => {
-    const clickLocation = e.latlng;
-    clickMarker = L.marker([clickLocation.lat, clickLocation.lng], { icon: myIcon }).addTo(mymap);
-    // mymap.removeLayer(clickMarker);
-});
+// let clickMarker;
+// mymap.on('click', e => {
+//     const clickLocation = e.latlng;
+//     clickMarker = L.marker([clickLocation.lat, clickLocation.lng], { icon: myIcon }).addTo(mymap);
+//     // mymap.removeLayer(clickMarker);
+// });
 
 
 
