@@ -12,6 +12,10 @@ L.tileLayer(
     { attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' }
 ).addTo(mymap);
 
+const markerGroup = L.layerGroup().addTo(mymap);
+
+
+// Location Icon
 const myIcon = L.icon({
     iconUrl: './img/icon256.png',
     iconSize: [64, 64],
@@ -19,8 +23,31 @@ const myIcon = L.icon({
     popupAnchor: [0, -60] // point from which the popup should open relative to the iconAnchor
 });
 
-const markerGroup = L.layerGroup().addTo(mymap);
+// ISS
+const issIcon = L.icon({
+    iconUrl: 'img/iss896x357.png',
+    iconSize: [150, 59.6],
+    iconAnchor: [75, 38.8],
+    popupAnchor: [0, -30] // point from which the popup should open relative to the iconAnchor
+});
 
+const issMarker = L.marker([0, 0], { icon: issIcon }).addTo(mymap);
+
+setInterval(
+    async () => {
+        const url_api = 'https://api.wheretheiss.at/v1/satellites/25544';
+        const data = await (await fetch(url_api)).json();
+
+        issMarker.setLatLng([data.latitude, data.longitude]);
+        issMarker.bindPopup(`<b>ISS: International Space Station</b><br>Latitude: ${data.latitude}<br>Longitude: ${data.longitude}`);
+    }
+, 1200);
+
+
+
+
+
+// YOUCODE
 const iconYc = L.icon({
     iconUrl: 'https://pbs.twimg.com/profile_images/1029034688323743744/JDOO6a6K_400x400.jpg',
     iconSize: [30, 30],
@@ -44,7 +71,7 @@ const newIcon = L.icon({
 
 let clickMarker;
 mymap.on('click', e => {
-    const clickLocation = e.latlng;    
+    const clickLocation = e.latlng;
     if (clickMarker) mymap.removeLayer(clickMarker);
     clickMarker = L.marker([clickLocation.lat, clickLocation.lng], { icon: newIcon }).addTo(mymap);
     LAT = clickLocation.lat;
@@ -56,7 +83,7 @@ mymap.on('click', e => {
 
 //Get location
 getLocation();
-function getLocation(lat, lon, zoom){
+function getLocation(lat, lon, zoom) {
     if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition(async position => {
             if (!lat) LAT = position.coords.latitude;
@@ -73,7 +100,7 @@ function getLocation(lat, lon, zoom){
 }
 
 
-async function refreshData() {  
+async function refreshData() {
     const data = await (await fetch(GET_API_URL)).json();
     for (let id in data) {
         const marker = L.marker([data[id].lat, data[id].lon], { icon: myIcon });
@@ -85,12 +112,9 @@ async function refreshData() {
 }
 
 
-setInterval(refreshData, 1000);
-setInterval(clearMarkers, 30000);
+setInterval(refreshData, 1500);
+setInterval(() => markerGroup.clearLayers(), 30000);
 
-async function clearMarkers(){
-    markerGroup.clearLayers();
-}
 
 
 
