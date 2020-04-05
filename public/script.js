@@ -2,8 +2,8 @@ const POST_API_URL = 'https://jsonblob.com/api/jsonBlob';
 const PUT_API_URL = 'https://jsonblob.com/api/jsonBlob/6cd58faf-76fd-11ea-9f37-8fe0a9c46af3';
 const GET_API_URL = 'https://jsonblob.com/api/jsonBlob/ab2efaf9-76f1-11ea-9f37-3587096b5ed1';
 
-let lat;
-let lon;
+let LAT;
+let LON;
 const mymap = L.map('issMap').setView([32.292122, -9.198271], 6);
 
 //Creating map
@@ -31,25 +31,28 @@ const iconYc = L.icon({
 const markerYC = L.marker([32.292995, -9.235207], { icon: iconYc }).addTo(mymap);
 markerYC.bindPopup('YouCode');
 
-// let clickMarker;
-// mymap.on('click', e => {
-//     const clickLocation = e.latlng;
-//     clickMarker = L.marker([clickLocation.lat, clickLocation.lng], { icon: myIcon }).addTo(mymap);
-//     // mymap.removeLayer(clickMarker);
-// });
+let clickMarker;
+mymap.on('click', e => {
+    const clickLocation = e.latlng;
+    clickMarker = L.marker([clickLocation.lat, clickLocation.lng], { icon: myIcon }).addTo(mymap);
+    LAT = clickLocation.lat;
+    LON = clickLocation.lng;
+    getLocation(LAT, LON);
+    // mymap.removeLayer(clickMarker);
+});
 
 
 
 //Get location
 getLocation();
-function getLocation(){
+function getLocation(lat, lon){
     if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition(async position => {
-            lat = position.coords.latitude;
-            lon = position.coords.longitude;
-            document.getElementById('lat').textContent = lat;
-            document.getElementById('lon').textContent = lon;
-            mymap.setView([lat, lon], 6);
+            if (!lat) LAT = position.coords.latitude;
+            if (!lon) LON = position.coords.longitude;
+            document.getElementById('lat').textContent = LAT;
+            document.getElementById('lon').textContent = LON;
+            mymap.setView([LAT, LON], 6);
         });
     }
     else {
@@ -105,7 +108,7 @@ async function share() {
             "Content-Type": "application/json",
             "Accept": "application/json"
         },
-        body: JSON.stringify({ name, lat, lon })
+        body: JSON.stringify({ name, lat: LAT, lon: LON })
     }
 
     const response = await (await fetch(POST_API_URL, options));
