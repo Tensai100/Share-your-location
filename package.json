@@ -1,0 +1,19 @@
+{
+  "name": "geolocation-api",
+  "version": "1.0.0",
+  "description": "Geolocation API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Geolocation",
+    "api"
+  ],
+  "author": "BOUFARA Mustapha",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.0"
+  }
+}
