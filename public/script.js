@@ -72,6 +72,8 @@ async function refreshData() {
         markers[i].addTo(mymap);
         markers[i].bindPopup(data[ids[i]].name);
     }
+
+    document.getElementById('infos').textContent = '';
 }
 
 
@@ -90,7 +92,7 @@ async function share() {
     //Name verifications
     const name = document.getElementById('name').value;
     if (name.length <= 0 || isHTML(name)) {
-        document.getElementById('infos').innerHTML = 'Invalid name!';
+        document.getElementById('infos').textContent = 'Invalid name!';
         document.getElementById('infos').style.color = 'red';
         return;
     }
@@ -141,6 +143,6 @@ async function share() {
 
 
 
-    document.getElementById('infos').innerHTML = 'Localisation shared with succes';
+    document.getElementById('infos').textContent = 'Localisation shared with succes (Your request is pending processing)';
     document.getElementById('infos').style.color = 'green';
 }
