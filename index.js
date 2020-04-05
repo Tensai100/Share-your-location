@@ -48,7 +48,7 @@ async function RefreshingData(){
         }
     
         const res = await fetch(PUT_API_URL, options);
-        console.log('Success: Cleaned');
+        // console.log('Success: Cleaned');
     }
     catch (err) { console.log('Geting existing json: ' + err); }
 
@@ -67,7 +67,7 @@ async function RefreshingData(){
     fs.writeFile(LOCAL_JSON_LINK, JSON.stringify(localJson, null, 2), err => {
         if (err)
             console.log("Error in fs.writeFile: " + err);
-        console.log('Success: File saved');
+        // console.log('Success: File saved');
     });
 
     try {

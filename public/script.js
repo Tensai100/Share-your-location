@@ -15,9 +15,11 @@ L.tileLayer(
 const myIcon = L.icon({
     iconUrl: './icon256.png',
     iconSize: [64, 64],
-    iconAnchor: [32, 80],
+    iconAnchor: [32, 64],
     popupAnchor: [0, -60] // point from which the popup should open relative to the iconAnchor
 });
+
+const markerGroup = L.layerGroup().addTo(mymap);
 
 const iconYc = L.icon({
     iconUrl: 'https://pbs.twimg.com/profile_images/1029034688323743744/JDOO6a6K_400x400.jpg',
@@ -59,7 +61,7 @@ function getLocation(lat, lon, zoom){
         navigator.geolocation.getCurrentPosition(async position => {
             if (!lat) LAT = position.coords.latitude;
             if (!lon) LON = position.coords.longitude;
-            if (!zoom) zoom = 6;
+            if (!zoom) zoom = 2;
             document.getElementById('lat').textContent = LAT;
             document.getElementById('lon').textContent = LON;
             mymap.setView([LAT, LON], zoom);
@@ -71,19 +73,12 @@ function getLocation(lat, lon, zoom){
 }
 
 
-async function refreshData() {    
-
+async function refreshData() {  
     const data = await (await fetch(GET_API_URL)).json();
-    const markers = [];
-    const ids = [];
     for (let id in data) {
-        markers.push(L.marker([data[id].lat, data[id].lon], { icon: myIcon }));
-        ids.push(id);
-    }
-
-    for (let i = 0; i < markers.length; i++) {
-        markers[i].addTo(mymap);
-        markers[i].bindPopup(data[ids[i]].name);
+        const marker = L.marker([data[id].lat, data[id].lon], { icon: myIcon });
+        marker.bindPopup(`<b>${data[id].name}</b><br>Latitude: ${data[id].lat}<br>Longitude: ${data[id].lon}`);
+        marker.addTo(markerGroup);
     }
 
     document.getElementById('infos').textContent = '';
@@ -91,6 +86,11 @@ async function refreshData() {
 
 
 setInterval(refreshData, 1000);
+setInterval(clearMarkers, 10000);
+
+async function clearMarkers(){
+    markerGroup.clearLayers();
+}
 
 
 
