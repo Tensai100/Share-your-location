@@ -56,7 +56,7 @@ const iconYc = L.icon({
 });
 
 
-//Making init markers
+// Making init markers
 const markerYC = L.marker([32.292995, -9.235207], { icon: iconYc }).addTo(mymap);
 markerYC.bindPopup('<b>YouCode</b>');
 
@@ -81,7 +81,7 @@ mymap.on('click', e => {
 
 
 
-//Get location
+// Get location
 getLocation();
 function getLocation(lat, lon, zoom) {
     if ("geolocation" in navigator) {
@@ -112,12 +112,11 @@ async function refreshData() {
 }
 
 
-setInterval(refreshData, 1500);
-setInterval(() => markerGroup.clearLayers(), 30000);
-
-
-
-
+setInterval(refreshData, 2000);
+setInterval(() => {
+    markerGroup.clearLayers();
+    refreshData();
+}, 30000);
 
 
 
