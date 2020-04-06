@@ -1,3 +1,4 @@
+require('dotenv').config();
 const fs = require('fs');
 const fetch = require(('node-fetch'));
 const https = require('https');

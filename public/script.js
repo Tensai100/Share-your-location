@@ -41,7 +41,7 @@ setInterval(
         issMarker.setLatLng([data.latitude, data.longitude]);
         issMarker.bindPopup(`<b>ISS: International Space Station</b><br>Latitude: ${data.latitude}<br>Longitude: ${data.longitude}`);
     }
-, 1200);
+, 1300);
 
 
 
