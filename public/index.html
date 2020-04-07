@@ -12,14 +12,26 @@
         crossorigin="">
         </script>
     <style>
+        .flex{
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
         #issMap {
             height: 600px;
         }
-        body{
+
+        body {
             font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-            font-size: 1.1em;
+            font-size: 1em;
         }
-        input{            
+
+        section{
+            max-width: 400px;
+        }
+
+        input {
             font-size: 1em;
             margin: 2px 0px;
         }
@@ -30,8 +42,16 @@
 
 <body>
     <h1>Share Your Location</h1>
-    <input type="button" value="Get your current location" onclick="getCurrentLocation()">
-    <div>It needs your autorisation</div>
+    <section class="flex">
+        <div>
+            <input type="button" value="Where are you ?" onclick="getCurrentLocation()"><br>
+            <span>(It needs your autorisation)</span>
+        </div>
+        <div>
+            <input type="button" value="Where is the ISS ?" onclick="getISSLocation()">
+        </div>
+    </section>
+    <br>
     <br>
 
     <label>

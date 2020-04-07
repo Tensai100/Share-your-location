@@ -4,6 +4,8 @@ const GET_API_URL = 'https://jsonblob.com/api/jsonBlob/ab2efaf9-76f1-11ea-9f37-3
 
 let LAT = 0;
 let LON = 0;
+let ISS_LAT = 0;
+let ISS_LON = 0;
 const mymap = L.map('issMap').setView([32.292122, -9.198271], 6);
 
 //Creating map
@@ -40,6 +42,8 @@ setInterval(
 
         issMarker.setLatLng([data.latitude, data.longitude]);
         issMarker.bindPopup(`<b>ISS: International Space Station</b><br>Latitude: ${data.latitude}<br>Longitude: ${data.longitude}`);
+        ISS_LAT = data.latitude;
+        ISS_LON = data.longitude;
     }
     , 1300);
 
@@ -105,6 +109,9 @@ function getCurrentLocation() {
     }
 }
 
+function getISSLocation(){
+    mymap.setView([ISS_LAT, ISS_LON], 8);
+}
 
 async function refreshData() {
     const data = await (await fetch(GET_API_URL)).json();
