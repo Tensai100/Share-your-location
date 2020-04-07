@@ -15,19 +15,29 @@
         #issMap {
             height: 600px;
         }
+        body{
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            font-size: 1.1em;
+        }
+        input{            
+            font-size: 1em;
+            margin: 2px 0px;
+        }
     </style>
 
     <title>My location</title>
 </head>
 
 <body>
-    <h1>My Location</h1>
+    <h1>Share Your Location</h1>
+    <input type="button" value="Get your current location" onclick="getCurrentLocation()">
+    <div>It needs your autorisation</div>
+    <br>
 
     <label>
         <input type="text" id='name' placeholder="Enter your name" required>
-        <input type="button" value="Share your postion" onclick="share()">
-        <br>
-        Status: <span id='infos'></span>
+        <input type="button" value="Share your location" onclick="share()">
+        <p>Status: <b id='infos'></b></p>
     </label>
 
     <p>

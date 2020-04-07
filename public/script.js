@@ -2,8 +2,8 @@ const POST_API_URL = 'https://jsonblob.com/api/jsonBlob';
 const PUT_API_URL = 'https://jsonblob.com/api/jsonBlob/6cd58faf-76fd-11ea-9f37-8fe0a9c46af3';
 const GET_API_URL = 'https://jsonblob.com/api/jsonBlob/ab2efaf9-76f1-11ea-9f37-3587096b5ed1';
 
-let LAT;
-let LON;
+let LAT = 0;
+let LON = 0;
 const mymap = L.map('issMap').setView([32.292122, -9.198271], 6);
 
 //Creating map
@@ -41,7 +41,7 @@ setInterval(
         issMarker.setLatLng([data.latitude, data.longitude]);
         issMarker.bindPopup(`<b>ISS: International Space Station</b><br>Latitude: ${data.latitude}<br>Longitude: ${data.longitude}`);
     }
-, 1300);
+    , 1300);
 
 
 
@@ -82,16 +82,22 @@ mymap.on('click', e => {
 
 
 // Get location
-getLocation();
+getLocation(0, 0, 2);
 function getLocation(lat, lon, zoom) {
+    document.getElementById('lat').textContent = LAT = lat;
+    document.getElementById('lon').textContent = LON = lon;
+    mymap.setView([LAT, LON], zoom);
+}
+
+function getCurrentLocation() {
     if ("geolocation" in navigator) {
-        navigator.geolocation.getCurrentPosition(async position => {
-            if (!lat) LAT = position.coords.latitude;
-            if (!lon) LON = position.coords.longitude;
-            if (!zoom) zoom = 2;
-            document.getElementById('lat').textContent = LAT;
-            document.getElementById('lon').textContent = LON;
-            mymap.setView([LAT, LON], zoom);
+        navigator.geolocation.getCurrentPosition(position => {
+            document.getElementById('lat').textContent = LAT = position.coords.latitude;
+            document.getElementById('lon').textContent = LON = position.coords.longitude;
+            mymap.setView([LAT, LON], 15);
+
+            if (clickMarker) mymap.removeLayer(clickMarker);
+            clickMarker = L.marker([LAT, LON], { icon: newIcon }).addTo(mymap);
         });
     }
     else {
@@ -107,8 +113,6 @@ async function refreshData() {
         marker.bindPopup(`<b>${data[id].name}</b><br>Latitude: ${data[id].lat}<br>Longitude: ${data[id].lon}`);
         marker.addTo(markerGroup);
     }
-
-    document.getElementById('infos').textContent = '';
 }
 
 
@@ -133,6 +137,10 @@ async function share() {
         return;
     }
 
+    if (LAT + LON == 0) {
+        document.getElementById('infos').textContent = 'Please choose a location in the map by clicking a single on it';
+        return;
+    }
 
     //POST a new JSON file and get its Location_url
     let options = {
@@ -152,12 +160,8 @@ async function share() {
 
     //Get existing (PUT) JSON file    
     let jsonData = {};
-    try {
-        jsonData = await (await fetch(PUT_API_URL)).json();
-        console.log('oldJson: ' + jsonData);
-    }
-    catch (err) { console.log('Geting existing json: ' + err); }
-
+    jsonData = await (await fetch(PUT_API_URL)).json();
+    console.log('oldJson: ' + jsonData);
 
 
     //Adding 
@@ -179,6 +183,6 @@ async function share() {
 
 
 
-    document.getElementById('infos').textContent = 'Localisation shared with succes (Your request is pending processing)';
+    document.getElementById('infos').textContent = 'Localisation shared with succes (If you don\'t see your location, it\'s gonna be added soon as possible)';
     document.getElementById('infos').style.color = 'green';
 }
