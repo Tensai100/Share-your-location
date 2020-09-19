@@ -32,19 +32,6 @@ async function RefreshingData() {
     try {
         json_toPUT = await (await fetch(PUT_API_URL)).json();
 
-        // Clean (PUTED) JSON file 
-        let options = {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            },
-            body: JSON.stringify({})
-        }
-
-        let res = await fetch(PUT_API_URL, options);
-        // console.log('Success: Cleaned');
-
         //Get Local JSON file
         const localJson = getLocalJson();
 
@@ -61,7 +48,7 @@ async function RefreshingData() {
         });
 
         // Upload JSON file
-        options = {
+        let options = {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -70,7 +57,21 @@ async function RefreshingData() {
             body: JSON.stringify(localJson)
         }
 
-        res = await fetch(GET_API_URL, options);
+        let res = await fetch(GET_API_URL, options);
+
+        // Clean (PUTED) JSON file 
+        options = {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify({})
+        }
+
+        res = await fetch(PUT_API_URL, options);
+        // console.log('Success: Cleaned');
+        
         console.log('Success: API Uploaded');
     }
     catch (err) { console.log(err); }
