@@ -58,12 +58,12 @@ const iconYc = L.icon({
     iconAnchor: [15, 15],
     popupAnchor: [0, -10] // point from which the popup should open relative to the iconAnchor
 });
-*/
+
 
 // Making init markers
 const markerYC = L.marker([32.292995, -9.235207], { icon: iconYc }).addTo(mymap);
 markerYC.bindPopup('<b>YouCode</b>');
-
+*/
 
 // CLICK EVENT
 const newIcon = L.icon({
