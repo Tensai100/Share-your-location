@@ -1,6 +1,6 @@
 const POST_API_URL = 'https://jsonblob.com/api/jsonBlob';
-const PUT_API_URL = 'https://jsonblob.com/api/jsonBlob/6cd58faf-76fd-11ea-9f37-8fe0a9c46af3';
-const GET_API_URL = 'https://jsonblob.com/api/jsonBlob/ab2efaf9-76f1-11ea-9f37-3587096b5ed1';
+const PUT_API_URL = 'https://jsonblob.com/api/jsonBlob/1729c9b5-885e-11eb-bfb2-ab098250cebb';
+const GET_API_URL = 'https://jsonblob.com/api/jsonBlob/2e4fb0f6-885e-11eb-bfb2-6f4579697e75';
 
 let LAT = 0;
 let LON = 0;
@@ -50,7 +50,7 @@ setInterval(
 
 
 
-
+/*
 // YOUCODE
 const iconYc = L.icon({
     iconUrl: 'https://pbs.twimg.com/profile_images/1029034688323743744/JDOO6a6K_400x400.jpg',
@@ -58,7 +58,7 @@ const iconYc = L.icon({
     iconAnchor: [15, 15],
     popupAnchor: [0, -10] // point from which the popup should open relative to the iconAnchor
 });
-
+*/
 
 // Making init markers
 const markerYC = L.marker([32.292995, -9.235207], { icon: iconYc }).addTo(mymap);
