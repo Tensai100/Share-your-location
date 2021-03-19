@@ -11,8 +11,8 @@ app.use(express.static('public'));
 app.use(express.json({ limit: '10mb' }));
 
 const POST_API_URL = 'https://jsonblob.com/api/jsonBlob';
-const PUT_API_URL = 'https://jsonblob.com/api/jsonBlob/6cd58faf-76fd-11ea-9f37-8fe0a9c46af3';
-const GET_API_URL = 'https://jsonblob.com/api/jsonBlob/ab2efaf9-76f1-11ea-9f37-3587096b5ed1';
+const PUT_API_URL = 'https://jsonblob.com/api/jsonBlob/1729c9b5-885e-11eb-bfb2-ab098250cebb';
+const GET_API_URL = 'https://jsonblob.com/api/jsonBlob/2e4fb0f6-885e-11eb-bfb2-6f4579697e75';
 const LOCAL_JSON_LINK = './location.json';
 
 function getLocalJson() {
